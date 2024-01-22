@@ -1,6 +1,6 @@
-# encontrar el nombre de los usuarios que tienen mas de 17 años
-# si se cumple la condicion se muestra el texto 'Es mayor de edad'
-# si no se cumple la condicion se muestra el texto 'Es menor de edad'
+-- encontrar el nombre de los usuarios que tienen mas de 17 años
+-- si se cumple la condicion se muestra el texto 'Es mayor de edad'
+-- si no se cumple la condicion se muestra el texto 'Es menor de edad'
 SELECT *,
 CASE 
 	WHEN age > 17 THEN 'Es mayor de edad'
@@ -9,9 +9,9 @@ CASE
 FROM users
 ORDER BY age ASC;
 
-# encontrar el nombre de los usuarios que tienen mas de 17 años
-# si se cumple la condicion se muestra el texto 'TRUE'
-# si no se cumple la condicion se muestra el texto 'FALSE'
+-- encontrar el nombre de los usuarios que tienen mas de 17 años
+-- si se cumple la condicion se muestra el texto 'TRUE'
+-- si no se cumple la condicion se muestra el texto 'FALSE'
 SELECT *,
 CASE 
 	WHEN age > 17 THEN 'TRUE'

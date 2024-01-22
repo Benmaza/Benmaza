@@ -1,13 +1,13 @@
-# Seleccionar todos los datos de la tabla users
+-- Seleccionar todos los datos de la tabla users
 SELECT *
 FROM users;
 
-#seleciona todos los datos de la tabla productos 
+-- seleciona todos los datos de la tabla productos 
 SELECT *
 FROM productos p
 CROSS JOIN ingredientes i;
 
-# Usando JOIN unir tres bases de datos diferentes para conseguir la información que busco
+-- Usando JOIN unir tres bases de datos diferentes para conseguir la información que busco
 Se usa v , l, e para definir nombres de las bases de datos y ahorrar código 
 
 SELECT 
@@ -27,11 +27,11 @@ WHERE edad >
 		AVG(edad)
 	FROM empleados);
 
-#contar el número de empleados que hay en la tabla empleados
+-- contar el número de empleados que hay en la tabla empleados
 SELECT COUNT(DISTINCT ID_empleado) AS empleados_diferentes
 FROM empleados;
 
-#lista de empleados que han realizado alguna venta
+-- lista de empleados que han realizado alguna venta
 SELECT *
 FROM empleados
 WHERE ID_empleado IN(

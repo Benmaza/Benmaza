@@ -1,7 +1,7 @@
-#crear base de datos
+-- crear base de datos
 CREATE DATABASE Brais_2;
 
-#eliminar base de datos
+-- eliminar base de datos
 DROP DATABASE Brais_2;
 
 

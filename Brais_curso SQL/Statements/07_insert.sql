@@ -1,4 +1,4 @@
-#copia todos los datos de la tabla ventas a la tabla archivo_ventas
+-- copia todos los datos de la tabla ventas a la tabla archivo_ventas
 
 INSERT INTO archivo_ventas
 SELECT *
