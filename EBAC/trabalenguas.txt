@@ -1,1 +1,88 @@
-El amor es una locura que ni el cura lo cura, porque si el cura lo cura seria una locura del cura.
+Sub ExtraerMaximos()
+
+    Dim ws1 As Worksheet
+    Dim ws2 As Worksheet
+    Dim ws3 As Worksheet
+    Dim ws4 As Worksheet
+    Dim ws5 As Worksheet
+    Dim ws6 As Worksheet
+    Dim ws7 As Worksheet
+    Dim ws8 As Worksheet
+    Dim ws9 As Worksheet
+    Dim ws10 As Worksheet
+    Dim val As Worksheet
+    Dim rango1 As Range
+    Dim rango2 As Range
+    Dim rango3 As Range
+    Dim rango4 As Range
+    Dim rango5 As Range
+    Dim rango6 As Range
+    Dim rango7 As Range
+    Dim rango8 As Range
+    Dim rango9 As Range
+    Dim rango10 As Range
+    Dim max1 As Double
+    Dim max2 As Double
+    Dim max3 As Double
+    Dim max4 As Double
+    Dim max5 As Double
+    Dim max6 As Double
+    Dim max7 As Double
+    Dim max8 As Double
+    Dim max9 As Double
+    Dim max10 As Double
+  
+    ' Define las hojas de trabajo
+    Set ws1 = ThisWorkbook.Sheets("Hoja1")
+    Set ws2 = ThisWorkbook.Sheets("Hoja2")
+    Set ws3 = ThisWorkbook.Sheets("Hoja3")
+    Set ws4 = ThisWorkbook.Sheets("Hoja1")
+    Set ws5 = ThisWorkbook.Sheets("Hoja2")
+    Set ws6 = ThisWorkbook.Sheets("Hoja3")
+    Set ws7 = ThisWorkbook.Sheets("Hoja1")
+    Set ws8 = ThisWorkbook.Sheets("Hoja2")
+    Set ws9 = ThisWorkbook.Sheets("Hoja3")
+    Set ws10 = ThisWorkbook.Sheets("Hoja1")
+    Set val = ThisWorkbook.Sheets("Valores")
+   
+
+    ' Define los rangos
+    Set rango1 = ws1.Range("E19:E36")
+    Set rango2 = ws2.Range("E19:E36")
+    Set rango3 = ws3.Range("E19:E36")
+    Set rango4 = ws4.Range("E19:E36")
+    Set rango5 = ws5.Range("E19:E36")
+    Set rango6 = ws6.Range("E19:E36")
+    Set rango7 = ws7.Range("E19:E36")
+    Set rango8 = ws8.Range("E19:E36")
+    Set rango9 = ws9.Range("E19:E36")
+    Set rango10 = ws10.Range("E19:E36")
+   
+
+    ' Encuentra los valores máximos
+    max1 = Application.WorksheetFunction.Max(rango1)
+    max2 = Application.WorksheetFunction.Max(rango2)
+    max3 = Application.WorksheetFunction.Max(rango3)
+    max4 = Application.WorksheetFunction.Max(rango4)
+    max5 = Application.WorksheetFunction.Max(rango5)
+    max6 = Application.WorksheetFunction.Max(rango6)
+    max7 = Application.WorksheetFunction.Max(rango7)
+    max8 = Application.WorksheetFunction.Max(rango8)
+    max9 = Application.WorksheetFunction.Max(rango9)
+    max10 = Application.WorksheetFunction.Max(rango10)
+    
+
+    ' Imprime los valores máximos en la hoja1
+    val.Range("B2").Value = max1
+    val.Range("B3").Value = max2
+    val.Range("B4").Value = max3
+    val.Range("B5").Value = max4
+    va1.Range("B6").Value = max5
+    va1.Range("B7").Value = max6
+    va1.Range("B8").Value = max7
+    va1.Range("B9").Value = max8
+    va1.Range("B10").Value = max9
+    va1.Range("B11").Value = max10
+   
+
+End Sub
