@@ -1,8 +1,5 @@
 ### Que tal! es un Repositorio de Pruebas mientras voy aprendiendo
 
-- 🔭 I’m currently working on ... Aprender Programación para llegar a ser cientifico de datos
-- 🌱 I’m currently learning ...  Programación back-end
-- 🤔 I’m looking for help with ... Todo
-
-- 
+- 🔭 actualmente estoy ... Aprendiendo Programación para llegar a ser cientifico de datos
+ 
 - 📬 https://www.linkedin.com/in/benmaza/
