@@ -1,0 +1,135 @@
+Sub csv_excel()
+    ' Define las hojas de trabajo y las variables
+    Dim fecha(1 To 10) As String, hojas(1 To 10) As String
+    Dim val As Worksheet
+    Dim velrange(1 To 10, 1 To 12) As Range, vmax(1 To 10, 1 To 12) As Double
+    Dim acelrange(1 To 10, 1 To 12) As Range, amax(1 To 10, 1 To 12) As Double
+    Dim rng As Range
+    Dim cell As Range
+    Dim count As Integer
+
+    ' Pide el nombre de la hoja con advertencia de poner atencion
+    MsgBox "En este momento se generara una nueva hoja llamada valores y en ella se anexaran los valores junto con su grafica, las graficas aparecen encimadas", vbExclamation, "Advertencia"
+
+    ' Asigna los nombres de las hojas a las variables y define los rangos de velocidad y aceleración
+    On Error Resume Next
+    Dim totalSheets As Integer
+    totalSheets = ThisWorkbook.Sheets.count
+    For i = totalSheets To totalSheets - 9 Step -1
+        fecha(totalSheets - i + 1) = ThisWorkbook.Sheets(i).Name
+            For j = 1 To 12
+            Set velrange(totalSheets - i + 1, j) = ThisWorkbook.Sheets(i).Range("E" & (j + 18))
+            Set acelrange(totalSheets - i + 1, j) = ThisWorkbook.Sheets(i).Range("G" & (j + 18))
+            vmax(totalSheets - i + 1, j) = Application.WorksheetFunction.Max(velrange(totalSheets - i + 1, j))
+            amax(totalSheets - i + 1, j) = Application.WorksheetFunction.Max(acelrange(totalSheets - i + 1, j))
+        Next j
+    Next i
+On Error GoTo 0
+
+    ' Verificar si existe la hoja de valores
+    Dim wsi As Worksheet
+    Dim existe As Boolean
+    existe = False
+    For Each wsi In ThisWorkbook.Sheets
+        If wsi.Name = "valores" Then
+        existe = True
+        Exit For
+    End If
+    Next wsi
+    ' Crear la hoja de valores si no existe al final del libro
+    If existe = False Then
+        Set val = ThisWorkbook.Sheets.Add
+        val.Name = "valores"
+    Else
+        Set val = ThisWorkbook.Sheets("valores")
+    End If
+
+    ' Imprime los valores máximos en la hoja de valores
+    ' Combinar celdas de A1 a M1 y agregar texto de Velocidades
+    With val.Range("A1:M1")
+    .Merge
+    .HorizontalAlignment = xlCenter
+    .VerticalAlignment = xlCenter
+    .Value = "Velocidades"
+    End With
+
+    val.Range("A2:M2").Value = Array("Fecha", "AHV", "AVV", "AAV", "BHV", "BVV", "BAV", "CHV", "CVV", "CAV", "DHV", "DVV", "DAV")
+    For i = 1 To 10
+    val.Range("A" & i + 2 & ":M" & i + 2).Value = Array(fecha(i), vmax(i, 1), vmax(i, 2), vmax(i, 3), vmax(i, 4), vmax(i, 5), vmax(i, 6), vmax(i, 7), vmax(i, 8), vmax(i, 9), vmax(i, 10), vmax(i, 11), vmax(i, 12))
+    Next i
+
+    With val.Range("A20:M20")
+    .Merge
+    .HorizontalAlignment = xlCenter
+    .VerticalAlignment = xlCenter
+    .Value = "Aceleraciones"
+    End With
+
+    val.Range("A21:M21").Value = Array("Fecha", "AHA", "AVA", "AAA", "BHA", "BVA", "BAA", "CHA", "CVA", "CAA", "DHA", "DVA", "DAA")
+    For i = 1 To 10
+    val.Range("A" & i + 21 & ":M" & i + 21).Value = Array(fecha(i), amax(i, 1), amax(i, 2), amax(i, 3), amax(i, 4), amax(i, 5), amax(i, 6), amax(i, 7), amax(i, 8), amax(i, 9), amax(i, 10), amax(i, 11), amax(i, 12))
+    Next i
+
+    ' Ordenar los datos por fecha de la más antigua a la más reciente
+    val.Sort.SortFields.Clear
+    val.Sort.SortFields.Add Key:=val.Range("A3:A12"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal
+    With val.Sort
+        .SetRange Range("A2:M12")
+        .Header = xlYes
+        .MatchCase = False
+        .Orientation = xlTopToBottom
+        .SortMethod = xlPinYin
+        .Apply
+    End With
+
+    val.Sort.SortFields.Clear
+    val.Sort.SortFields.Add Key:=val.Range("A22:A31"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal
+    With val.Sort
+        .SetRange Range("A21:M31")
+        .Header = xlYes
+        .MatchCase = False
+        .Orientation = xlTopToBottom
+        .SortMethod = xlPinYin
+        .Apply
+    End With
+
+    ' Dar formato a las celdas
+    With val.Range("A3:A12")
+        .HorizontalAlignment = xlLeft ' Centrar el texto
+        .EntireColumn.AutoFit ' Ajustar el tamaño de la columna
+    End With
+    With val.Range("B3:M12")
+        .NumberFormat = "0.00" ' Formato de dos decimales
+        .HorizontalAlignment = xlCenter ' Centrar el texto
+        .EntireColumn.AutoFit ' Ajustar el tamaño de la columna
+    End With
+
+    ' Dar formato a las celdas
+    With val.Range("A22:A31")
+        .HorizontalAlignment = xlLeft ' Centrar el texto
+        .EntireColumn.AutoFit ' Ajustar el tamaño de la columna
+    End With
+    With val.Range("B22:M31")
+        .NumberFormat = "0.00" ' Formato de dos decimales
+        .HorizontalAlignment = xlCenter ' Centrar el texto
+        .EntireColumn.AutoFit ' Ajustar el tamaño de la columna
+    End With
+    
+    ' Identificar el formato de fecha y convertirlo a fecha de Excel
+        
+    Set rng = val.Range("A3:A12")
+    For Each cell In rng
+    count = 0
+    If Len(cell.Value) >= 11 Then ' Si la fecha está en el formato "YYMMDD ***"
+        cell.Value = Mid(cell.Value, 3, 2) & Mid(cell.Value, 5, 2) & Mid(cell.Value, 7, 2) & Mid(cell.Value, 9, 3)
+    ElseIf Len(cell.Value) = 8 Then ' Si la fecha está en el formato "YYMMDD"
+        cell.Value = Right(cell.Value, 2) & Mid(cell.Value, 3, 2) & Left(cell.Value, 2)
+    'Si la celda tiene el mismo valor que la celda anterior, incrementa el contador
+    ElseIf cell.Value = cell.Offset(-1, 0).Value Then
+        count = count + 1
+        ' Agrega un pequeño valor decimal a la celda para hacerla única
+        cell.Value = cell.Value + count * 0.0001
+    End If
+    Next cell
+    MsgBox "Proceso terminado"
+End Sub
