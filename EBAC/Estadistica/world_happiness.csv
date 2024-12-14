@@ -1,0 +1,143 @@
+Continent,country,social_support,freedom,corruption,generosity,gdp_per_cap,life_exp,happiness_score,ms_sugar_per_day
+Europe,Finland,2,5,4,47,42400,81.8,155,86.8
+Europe,Denmark,4,6,3,22,48300,81,154,152
+Europe,Norway,3,3,8,11,66300,82.6,153,120
+Europe,Iceland,1,7,45,3,47900,83,152,132
+Europe,Netherlands,15,19,12,7,50500,81.8,151,122
+Europe,Switzerland,13,11,7,16,59000,84.3,150,166
+Europe,Sweden,25,10,6,17,47200,82.8,149,115
+Oceania,New Zealand,5,8,5,8,36500,81.9,148,162
+North America,Canada,20,9,11,14,44200,82.2,147,132
+Europe,Austria,31,26,19,25,46900,82,146,124
+Oceania,Australia,7,17,13,6,45500,82.7,145,126
+North America,Costa Rica,42,16,58,75,15800,79.8,144,144
+Asia,Israel,38,93,74,24,34100,83.3,143,76.2
+Europe,Luxembourg,27,28,9,30,94300,82,142,141
+Europe,United Kingdom,9,63,15,4,40400,81.1,141,113
+Europe,Ireland,6,33,10,9,72400,82.3,140,126
+Europe,Germany,39,44,17,19,46200,80.9,139,133
+Europe,Belgium,22,53,20,44,43500,81.7,138,144
+North America,United States,37,62,42,12,56700,78.6,137,175
+Europe,Czech Republic,24,58,121,117,34100,79.5,136,118
+Asia,United Arab Emirates,72,4,NA,15,65700,73.6,135,101
+Europe,Malta,16,12,32,5,39300,81.3,134,168
+North America,Mexico,67,71,87,120,18000,75.6,133,133
+Europe,France,32,69,21,68,40000,83.1,132,107
+South America,Chile,58,98,99,45,23000,80,130,131
+North America,Guatemala,78,25,82,78,7610,73.1,129,132
+Asia,Saudi Arabia,62,68,NA,82,48100,77.1,128,86.8
+Asia,Qatar,NA,NA,NA,NA,113000,80.5,127,NA
+Europe,Spain,26,95,78,50,35700,83.3,126,85.6
+North America,Panama,41,32,104,88,23300,79.7,125,95.3
+South America,Brazil,43,84,71,108,14300,75.9,124,117
+South America,Uruguay,35,30,33,80,20900,77.3,123,111
+Asia,Singapore,36,20,1,21,90100,85.1,122,NA
+North America,El Salvador,83,74,85,134,7510,74.5,121,113
+Europe,Italy,23,132,128,48,35800,83.5,120,88
+Asia,Bahrain,59,24,NA,23,42000,79.8,119,NA
+North America,Trinidad and Tobago,29,51,141,41,28500,74.5,117,162
+Europe,Poland,44,52,108,77,29900,78.4,116,122
+Asia,Uzbekistan,11,1,18,29,6490,70.7,115,27.6
+Europe,Lithuania,17,122,113,124,32400,75.4,114,130
+South America,Colombia,52,56,124,111,13600,80.5,113,160
+Europe,Slovenia,14,13,97,54,33700,81.4,112,75.1
+North America,Nicaragua,66,70,43,71,4620,79.2,111,116
+South America,Argentina,46,54,109,123,17500,77,109,132
+Europe,Romania,86,57,146,102,25500,75.4,108,70.1
+Asia,Cyprus,90,81,115,39,34500,82,107,101
+South America,Ecuador,71,42,68,95,10200,77.2,106,63.3
+Asia,Kuwait,69,47,NA,42,64100,83.3,105,106
+Asia,Thailand,53,18,131,10,17400,78.6,104,109
+Europe,Latvia,34,126,92,105,27300,75.4,103,117
+Asia,South Korea,91,144,100,40,37300,83,102,105
+Europe,Estonia,12,45,30,83,32000,78.5,101,86.5
+North America,Jamaica,28,49,130,119,8310,74.9,100,135
+Africa,Mauritius,54,40,96,37,21800,75,99,NA
+Asia,Japan,50,64,39,92,39700,84.5,98,74.2
+North America,Honduras,84,39,79,51,4630,74.3,97,131
+Asia,Kazakhstan,19,80,57,57,25400,72.8,96,78.4
+South America,Bolivia,93,35,91,104,7150,73.3,95,75.2
+Europe,Hungary,51,138,140,100,29600,77.2,94,95
+South America,Paraguay,30,34,76,67,12000,76.4,93,69.6
+South America,Peru,77,61,132,126,13000,80.8,91,62.9
+Europe,Portugal,47,37,135,122,29300,81.8,90,78
+Asia,Pakistan,130,114,55,58,5000,67.2,89,76
+Europe,Russia,40,107,127,101,25700,72.5,88,134
+Asia,Philippines,75,15,49,115,8260,70,87,64.6
+Europe,Serbia,57,124,118,84,16700,76,86,77.1
+Europe,Moldova,65,128,148,86,6720,73.1,85,64.6
+Africa,Libya,73,79,31,87,14800,73.3,84,NA
+Europe,Montenegro,60,139,77,76,17800,76.7,83,131
+Asia,Tajikistan,113,86,35,72,3150,70.8,82,51.9
+Europe,Croatia,79,118,139,81,24500,78.8,81,118
+North America,Dominican Republic,55,43,52,93,16400,73.5,79,95.3
+Asia,Turkey,61,140,50,98,25000,79.5,77,87.3
+Asia,Malaysia,97,36,137,27,29100,75,76,121
+Europe,Belarus,33,131,37,103,18000,74.5,75,107
+Europe,Greece,102,150,123,152,25700,81.3,74,80.3
+Asia,Mongolia,10,112,119,38,12800,69.3,73,40.3
+Africa,Nigeria,111,75,114,59,5300,65.2,71,29.4
+Asia,Turkmenistan,8,83,NA,33,17600,70.3,69,24.6
+Africa,Algeria,101,149,46,128,14000,78.1,68,78.2
+Africa,Morocco,139,76,84,154,7770,74.4,67,109
+Asia,Azerbaijan,104,101,22,146,16200,71.1,66,50.5
+Asia,Lebanon,89,136,133,63,11700,78.1,65,123
+Asia,Indonesia,94,48,129,2,12100,71.9,64,46.5
+Asia,China,108,31,NA,133,17100,77.5,63,18.8
+Asia,Vietnam,64,23,86,97,6970,74.7,62,27.4
+Asia,Bhutan,68,59,25,13,9710,74.7,61,NA
+Africa,Cameroon,129,90,120,91,3400,63.8,60,27.2
+Europe,Bulgaria,18,115,147,112,20200,75.1,59,78.7
+Africa,Ghana,132,91,117,52,4430,66.1,58,40.5
+Asia,Nepal,87,67,65,46,2880,71.5,56,13
+Asia,Jordan,88,88,NA,118,8350,79.6,55,128
+Africa,Benin,153,103,75,116,2230,65.3,54,21.4
+Africa,Gabon,95,119,103,143,16200,69,52,42.6
+Africa,South Africa,63,85,102,89,12000,66.9,50,101
+Europe,Albania,133,87,134,60,12700,78.5,49,131
+South America,Venezuela,49,145,110,139,9720,75.1,48,106
+Asia,Cambodia,109,2,94,61,4080,70.4,47,51.5
+Africa,Senegal,106,121,88,130,3460,68.6,45,50
+Africa,Somalia,145,14,16,96,631,59.2,44,NA
+Africa,Namibia,70,82,98,142,9700,67.2,43,55.4
+Africa,Niger,140,111,51,135,954,63.2,42,14.5
+Africa,Burkina Faso,116,127,47,125,1810,62.5,41,20.3
+Asia,Armenia,117,123,93,129,9730,75.9,40,97.4
+Asia,Iran,134,117,44,28,16100,77.8,39,79.8
+Africa,Guinea,136,109,70,94,2420,61.6,38,27.2
+Asia,Georgia,147,104,28,153,10700,73.2,37,NA
+Africa,Gambia,125,89,26,64,1570,66.4,36,72.2
+Africa,Kenya,123,72,105,26,3160,66.7,35,43.7
+Africa,Mauritania,99,151,67,148,3890,71,34,99.2
+Africa,Mozambique,122,46,40,121,1170,59.9,33,30.7
+Africa,Tunisia,121,143,101,144,11100,78.7,32,95.5
+Asia,Bangladesh,126,27,36,107,4140,73.7,31,22.1
+Asia,Iraq,124,130,66,73,15700,77.1,30,52.8
+Africa,Mali,112,110,107,138,2100,62.9,28,28.1
+Africa,Sierra Leone,135,116,112,79,1460,61.3,27,16.5
+Asia,Sri Lanka,80,55,111,35,12100,77.8,26,73.4
+Asia,Myanmar,96,29,24,1,6270,69.1,25,46.2
+Africa,Chad,141,142,80,106,1740,60.6,24,29.1
+Europe,Ukraine,56,141,143,66,8480,70.8,23,126
+Africa,Ethiopia,119,106,53,99,1900,69.1,22,18.1
+Africa,Uganda,114,99,95,74,1870,66.6,20,32.4
+Africa,Egypt,118,129,89,132,11400,71,19,78
+Africa,Zambia,115,73,69,53,3700,64,18,28.1
+Africa,Togo,149,120,72,131,1610,65,17,33.3
+Asia,India,142,41,73,65,7230,69.5,16,64.2
+Africa,Liberia,127,94,126,110,1140,65.2,15,15.5
+Africa,Comoros,143,148,81,62,2480,69.1,14,NA
+Africa,Madagascar,128,146,116,136,1490,64.2,13,20.3
+Africa,Lesotho,98,97,59,151,2920,56.1,12,45.5
+Africa,Burundi,152,135,23,149,644,62.3,11,NA
+Africa,Zimbabwe,110,96,63,141,2390,62,10,80.6
+North America,Haiti,146,152,48,20,1640,65.7,9,45.8
+Africa,Botswana,105,60,54,150,16800,69.8,8,85
+Asia,Syria,154,153,38,69,2900,71.5,7,NA
+Africa,Malawi,150,65,64,109,1180,64.2,6,22.6
+Asia,Yemen,100,147,83,155,2340,68.1,5,77.9
+Africa,Rwanda,144,21,2,90,2110,69.1,4,14.1
+Africa,Tanzania,131,78,34,49,2980,67.7,3,28
+Asia,Afghanistan,151,155,136,137,1760,64.1,2,24.5
+Africa,Central African Republic,155,133,122,113,794,52.9,1,22.4
+Africa,South Sudan,148,154,61,85,1860,59.7,0,NA
