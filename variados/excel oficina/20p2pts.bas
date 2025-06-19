@@ -1,188 +1,101 @@
-Attribute VB_Name = "Module2"
 Sub Datos20p2pts()
     ' Define las hojas de trabajo y las variables
-    Dim fecha(1 To 20) As String, hojas(1 To 20) As String
+    Dim fechas(1 To 20) As String
+    Dim vmax(1 To 20, 1 To 6) As Double, amax(1 To 20, 1 To 6) As Double
     Dim val As Worksheet
-    Dim velrange(1 To 20, 1 To 6) As Range, vmax(1 To 20, 1 To 6) As Double
-    Dim acelrange(1 To 20, 1 To 6) As Range, amax(1 To 20, 1 To 6) As Double
-    Dim rng As Range
-    Dim cell As Range
-    Dim count As Integer
+    Dim i As Integer, j As Integer
 
-    ' Lanza advertencia del proceso
-    MsgBox "Se generara una nueva hoja llamada valores y en ella se anexaran los valores junto con su graficas", vbExclamation, "Advertencia"
+    MsgBox "Se generarÃ¡ una nueva hoja llamada valores y en ella se anexarÃ¡n los valores junto con sus grÃ¡ficas", vbExclamation, "Advertencia"
 
-    ' Asigna los nombres de las hojas a las variables y define los rangos de velocidad y aceleración
-    On Error Resume Next
+    ' Obtener nombres de hojas y valores mÃ¡ximos
     Dim totalSheets As Integer
-    totalSheets = ThisWorkbook.Sheets.count
-    For i = totalSheets To totalSheets - 19 Step -1
-        fecha(totalSheets - i + 1) = ThisWorkbook.Sheets(i).Name
-            For j = 1 To 6
-            Set velrange(totalSheets - i + 1, j) = ThisWorkbook.Sheets(i).Range("E" & (j + 18))
-            Set acelrange(totalSheets - i + 1, j) = ThisWorkbook.Sheets(i).Range("G" & (j + 18))
-            vmax(totalSheets - i + 1, j) = Application.WorksheetFunction.Max(velrange(totalSheets - i + 1, j))
-            amax(totalSheets - i + 1, j) = Application.WorksheetFunction.Max(acelrange(totalSheets - i + 1, j))
+    totalSheets = ThisWorkbook.Sheets.Count
+    For i = 1 To 20
+        Dim ws As Worksheet
+        Set ws = ThisWorkbook.Sheets(totalSheets - 20 + i)
+        fechas(i) = ws.Name
+        For j = 1 To 6
+            vmax(i, j) = ws.Range("E" & (j + 18)).Value
+            amax(i, j) = ws.Range("G" & (j + 18)).Value
         Next j
     Next i
-On Error GoTo 0
 
-    ' Verificar si existe la hoja de "valores" y la crea
-    Dim wsi As Worksheet
-    Dim existe As Boolean
-    existe = False
-    For Each wsi In ThisWorkbook.Sheets
-        If wsi.Name = "valores" Then
-        existe = True
-        Exit For
-    End If
-    Next wsi
-    If existe = False Then
-        Set val = ThisWorkbook.Sheets.Add
+    ' Crear o limpiar hoja "valores"
+    On Error Resume Next
+    Set val = ThisWorkbook.Sheets("valores")
+    If val Is Nothing Then
+        Set val = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.Count))
         val.Name = "valores"
     Else
-        Set val = ThisWorkbook.Sheets("valores")
+        val.Cells.Clear
     End If
+    On Error GoTo 0
 
-    ' Imprime los valores máximos en la hoja de valores
-    ' Combinar celdas de A1 a M1 y agregar texto de Velocidades
-    With val.Range("A1:G1")
-    .Merge
-    .HorizontalAlignment = xlCenter
-    .VerticalAlignment = xlCenter
-    .Value = "Velocidades"
-    End With
-
+    ' Escribir encabezados y datos
+    val.Range("A1:G1").Merge
+    val.Range("A1").Value = "Velocidades"
     val.Range("A2:G2").Value = Array("Fecha", "AHV", "AVV", "AAV", "BHV", "BVV", "BAV")
     For i = 1 To 20
-    val.Range("A" & i + 2 & ":G" & i + 2).Value = Array(fecha(i), vmax(i, 1), vmax(i, 2), vmax(i, 3), vmax(i, 4), vmax(i, 5), vmax(i, 6))
+        val.Range("A" & i + 2 & ":G" & i + 2).Value = Array(fechas(i), vmax(i, 1), vmax(i, 2), vmax(i, 3), vmax(i, 4), vmax(i, 5), vmax(i, 6))
     Next i
 
-    With val.Range("A25:G25")
-    .Merge
-    .HorizontalAlignment = xlCenter
-    .VerticalAlignment = xlCenter
-    .Value = "Aceleraciones"
-    End With
-
+    val.Range("A25:G25").Merge
+    val.Range("A25").Value = "Aceleraciones"
     val.Range("A26:G26").Value = Array("Fecha", "AHA", "AVA", "AAA", "BHA", "BVA", "BAA")
     For i = 1 To 20
-    val.Range("A" & i + 26 & ":G" & i + 26).Value = Array(fecha(i), amax(i, 1), amax(i, 2), amax(i, 3), amax(i, 4), amax(i, 5), amax(i, 6))
+        val.Range("A" & i + 26 & ":G" & i + 26).Value = Array(fechas(i), amax(i, 1), amax(i, 2), amax(i, 3), amax(i, 4), amax(i, 5), amax(i, 6))
     Next i
 
-    ' Ordenar los datos por fecha de la más antigua a la más reciente
+    ' Formato
+    val.Columns("A:G").AutoFit
+    val.Range("B3:G22,B27:G46").NumberFormat = "0.00"
+    val.Range("A3:A22,A27:A46").HorizontalAlignment = xlLeft
+    val.Range("B3:G22,B27:G46").HorizontalAlignment = xlCenter
+
+    ' Ordenar por fecha (asumiendo formato adecuado)
     val.Sort.SortFields.Clear
     val.Sort.SortFields.Add Key:=val.Range("A3:A22"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal
     With val.Sort
-        .SetRange Range("A2:G22")
+        .SetRange val.Range("A2:G22")
         .Header = xlYes
-        .MatchCase = False
-        .Orientation = xlTopToBottom
-        .SortMethod = xlPinYin
         .Apply
     End With
-
     val.Sort.SortFields.Clear
     val.Sort.SortFields.Add Key:=val.Range("A27:A46"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal
     With val.Sort
-        .SetRange Range("A26:G46")
+        .SetRange val.Range("A26:G46")
         .Header = xlYes
-        .MatchCase = False
-        .Orientation = xlTopToBottom
-        .SortMethod = xlPinYin
         .Apply
     End With
 
-    ' Dar formato a las celdas
-    With val.Range("A3:A22")
-        .HorizontalAlignment = xlLeft ' Centrar el texto
-        .EntireColumn.AutoFit ' Ajustar el tamaño de la columna
-    End With
-    With val.Range("B3:G22")
-        .NumberFormat = "0.00" ' Formato de dos decimales
-        .HorizontalAlignment = xlCenter ' Centrar el texto
-        .EntireColumn.AutoFit ' Ajustar el tamaño de la columna
-    End With
+    ' Crear grÃ¡ficos
+    Call CrearGrafico(val, 3, 22, "Velocidades", Array("AHV", "AVV", "AAV", "BHV", "BVV", "BAV"), 150, 170, 420, 300, "GrÃ¡fica de Valores de Velocidad")
+    Call CrearGrafico(val, 27, 46, "Aceleraciones", Array("AHA", "AVA", "AAA", "BHA", "BVA", "BAA"), 100, 370, 420, 300, "GrÃ¡fica de Valores de AceleraciÃ³n")
 
-    ' Dar formato a las celdas
-    With val.Range("A27:A46")
-        .HorizontalAlignment = xlLeft ' Centrar el texto
-        .EntireColumn.AutoFit ' Ajustar el tamaño de la columna
-    End With
-    With val.Range("B27:G46")
-        .NumberFormat = "0.00" ' Formato de dos decimales
-        .HorizontalAlignment = xlCenter ' Centrar el texto
-        .EntireColumn.AutoFit ' Ajustar el tamaño de la columna
-    End With
-    
-    ' Identificar el formato de fecha y convertirlo a fecha de Excel
-    
-    
-    Set rng = val.Range("A3:A22")
-    For Each cell In rng
-    count = 0
-    If Len(cell.Value) >= 11 Then ' Si la fecha está en el formato "YYMMDD ***"
-        cell.Value = Mid(cell.Value, 3, 2) & Mid(cell.Value, 5, 2) & Mid(cell.Value, 7, 2) & Mid(cell.Value, 9, 3)
-    ElseIf Len(cell.Value) = 8 Then ' Si la fecha está en el formato "YYMMDD"
-        cell.Value = Right(cell.Value, 2) & Mid(cell.Value, 3, 2) & Left(cell.Value, 2)
-    'Si la celda tiene el mismo valor que la celda anterior, incrementa el contador
-    ElseIf cell.Value = cell.Offset(-1, 0).Value Then
-        count = count + 1
-        ' Agrega un pequeño valor decimal a la celda para hacerla única
-        cell.Value = cell.Value + count * 0.0001
-    End If
-    Next cell
-
-    ' Crear una gráfica de barras a partir de los datos de velocidad
-    Dim chartObj As ChartObject
-    Set chartObj = val.ChartObjects.Add(Left:=150, Width:=420, Top:=170, Height:=300)
-    With chartObj.Chart
-    ' Define la fuente de datos para la gráfica
-    Dim seriesNames As Variant
-    seriesNames = Array("AHV", "AVV", "AAV", "BHV", "BVV", "BAV")
-    
-    For i = 1 To 6
-        .SeriesCollection.NewSeries
-        .SeriesCollection(i).Name = seriesNames(i - 1)
-        .SeriesCollection(i).Values = val.Range(Cells(3, i + 1), Cells(22, i + 1))
-        .SeriesCollection(i).XValues = val.Range("A3:A22")
-    Next i
-    
-    .ChartType = xlLine ' Cambiar a gráfica de líneas
-    .HasTitle = True
-    .ChartTitle.Text = "Gr" & ChrW(225) & "fica de Valores de Velocidad"
-    .Axes(xlCategory, xlPrimary).HasTitle = True
-    .Axes(xlCategory, xlPrimary).AxisTitle.Text = "Fecha"
-    .Axes(xlValue, xlPrimary).HasTitle = True
-    .Axes(xlValue, xlPrimary).AxisTitle.Text = "Valores"
-    .Axes(xlCategory).CategoryType = xlTimeScale ' Cambiar el tipo de escala del eje X a tiempo
-    .Axes(xlCategory).TickLabels.Orientation = 90
-    End With
-
-    ' Crear una gráfica de barras a partir de los datos de aceleración
-    Set chartObj = val.ChartObjects.Add(Left:=100, Width:=420, Top:=370, Height:=300)
-    With chartObj.Chart
-    ' Define la fuente de datos para la gráfica
-    seriesNames = Array("AHA", "AVA", "AAA", "BHA", "BVA", "BAA")
-    
-   For i = 1 To 6
-        .SeriesCollection.NewSeries
-        .SeriesCollection(i).Name = seriesNames(i - 1)
-        .SeriesCollection(i).Values = val.Range(Cells(27, i + 1), Cells(46, i + 1))
-        .SeriesCollection(i).XValues = val.Range("A27:A46")
-    Next i
-    
-    .ChartType = xlLine ' Cambiar a gráfica de líneas
-    .HasTitle = True
-    .ChartTitle.Text = "Gr" & ChrW(225) & "fica de Valores de Aceleraci" & ChrW(243) & "n"
-    .Axes(xlCategory, xlPrimary).HasTitle = True
-    .Axes(xlCategory, xlPrimary).AxisTitle.Text = "Fecha"
-    .Axes(xlValue, xlPrimary).HasTitle = True
-    .Axes(xlValue, xlPrimary).AxisTitle.Text = "Valores"
-    .Axes(xlCategory).CategoryType = xlTimeScale ' Cambiar el tipo de escala del eje X a tiempo
-    .Axes(xlCategory).TickLabels.Orientation = 90
-    End With
     MsgBox "Proceso terminado"
+End Sub
+
+Private Sub CrearGrafico(ws As Worksheet, filaIni As Integer, filaFin As Integer, titulo As String, seriesNames As Variant, left As Integer, top As Integer, width As Integer, height As Integer, chartTitle As String)
+    Dim chartObj As ChartObject
+    Set chartObj = ws.ChartObjects.Add(Left:=left, Width:=width, Top:=top, Height:=height)
+    With chartObj.Chart
+        Dim i As Integer
+        For i = 1 To 6
+            .SeriesCollection.NewSeries
+            .SeriesCollection(i).Name = seriesNames(i - 1)
+            .SeriesCollection(i).Values = ws.Range(ws.Cells(filaIni, i + 1), ws.Cells(filaFin, i + 1))
+            .SeriesCollection(i).XValues = ws.Range(ws.Cells(filaIni, 1), ws.Cells(filaFin, 1))
+        Next i
+        .ChartType = xlLine
+        .HasTitle = True
+        .ChartTitle.Text = chartTitle
+        .Axes(xlCategory, xlPrimary).HasTitle = True
+        .Axes(xlCategory, xlPrimary).AxisTitle.Text = "Fecha"
+        .Axes(xlValue, xlPrimary).HasTitle = True
+        .Axes(xlValue, xlPrimary).AxisTitle.Text = "Valores"
+        .Axes(xlCategory).CategoryType = xlTimeScale
+        .Axes(xlCategory).TickLabels.Orientation = 90
+    End With
 End Sub
 
 

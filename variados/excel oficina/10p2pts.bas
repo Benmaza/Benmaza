@@ -1,4 +1,3 @@
-Attribute VB_Name = "Module4"
 Sub Datos10p2pts()
     ' Define las hojas de trabajo y las variables
     Dim fecha(1 To 10) As String, hojas(1 To 10) As String
@@ -12,7 +11,7 @@ Sub Datos10p2pts()
     ' Lanza advertencia del proceso
     MsgBox "Se generara una nueva hoja llamada valores y en ella se anexaran los valores junto con su graficas", vbExclamation, "Advertencia"
 
-    ' Asigna los nombres de las hojas a las variables y define los rangos de velocidad y aceleración
+    ' Asigna los nombres de las hojas a las variables y define los rangos de velocidad y aceleraciï¿½n
     On Error Resume Next
     Dim totalSheets As Integer
     totalSheets = ThisWorkbook.Sheets.count
@@ -44,7 +43,7 @@ On Error GoTo 0
         Set val = ThisWorkbook.Sheets("valores")
     End If
 
-    ' Imprime los valores máximos en la hoja de valores
+    ' Imprime los valores mï¿½ximos en la hoja de valores
     ' Combinar celdas de A1 a M1 y agregar texto de Velocidades
     With val.Range("A1:G1")
     .Merge
@@ -70,7 +69,7 @@ On Error GoTo 0
     val.Range("A" & i + 21 & ":G" & i + 21).Value = Array(fecha(i), amax(i, 1), amax(i, 2), amax(i, 3), amax(i, 4), amax(i, 5), amax(i, 6))
     Next i
 
-    ' Ordenar los datos por fecha de la más antigua a la más reciente
+    ' Ordenar los datos por fecha de la mï¿½s antigua a la mï¿½s reciente
     val.Sort.SortFields.Clear
     val.Sort.SortFields.Add Key:=val.Range("A3:A12"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal
     With val.Sort
@@ -96,23 +95,23 @@ On Error GoTo 0
     ' Dar formato a las celdas
     With val.Range("A3:A12")
         .HorizontalAlignment = xlLeft ' Centrar el texto
-        .EntireColumn.AutoFit ' Ajustar el tamaño de la columna
+        .EntireColumn.AutoFit ' Ajustar el tamaï¿½o de la columna
     End With
     With val.Range("B3:G12")
         .NumberFormat = "0.00" ' Formato de dos decimales
         .HorizontalAlignment = xlCenter ' Centrar el texto
-        .EntireColumn.AutoFit ' Ajustar el tamaño de la columna
+        .EntireColumn.AutoFit ' Ajustar el tamaï¿½o de la columna
     End With
 
     ' Dar formato a las celdas
     With val.Range("A22:A31")
         .HorizontalAlignment = xlLeft ' Centrar el texto
-        .EntireColumn.AutoFit ' Ajustar el tamaño de la columna
+        .EntireColumn.AutoFit ' Ajustar el tamaï¿½o de la columna
     End With
     With val.Range("B22:G31")
         .NumberFormat = "0.00" ' Formato de dos decimales
         .HorizontalAlignment = xlCenter ' Centrar el texto
-        .EntireColumn.AutoFit ' Ajustar el tamaño de la columna
+        .EntireColumn.AutoFit ' Ajustar el tamaï¿½o de la columna
     End With
     
     ' Identificar el formato de fecha y convertirlo a fecha de Excel
@@ -121,23 +120,23 @@ On Error GoTo 0
     Set rng = val.Range("A3:A12")
     For Each cell In rng
     count = 0
-    If Len(cell.Value) >= 11 Then ' Si la fecha está en el formato "YYMMDD ***"
+    If Len(cell.Value) >= 11 Then ' Si la fecha estï¿½ en el formato "YYMMDD ***"
         cell.Value = Mid(cell.Value, 3, 2) & Mid(cell.Value, 5, 2) & Mid(cell.Value, 7, 2) & Mid(cell.Value, 9, 3)
-    ElseIf Len(cell.Value) = 8 Then ' Si la fecha está en el formato "YYMMDD"
+    ElseIf Len(cell.Value) = 8 Then ' Si la fecha estï¿½ en el formato "YYMMDD"
         cell.Value = Right(cell.Value, 2) & Mid(cell.Value, 3, 2) & Left(cell.Value, 2)
     'Si la celda tiene el mismo valor que la celda anterior, incrementa el contador
     ElseIf cell.Value = cell.Offset(-1, 0).Value Then
         count = count + 1
-        ' Agrega un pequeño valor decimal a la celda para hacerla única
+        ' Agrega un pequeï¿½o valor decimal a la celda para hacerla ï¿½nica
         cell.Value = cell.Value + count * 0.0001
     End If
     Next cell
 
-    ' Crear una gráfica de barras a partir de los datos de velocidad
+    ' Crear una grï¿½fica de barras a partir de los datos de velocidad
     Dim chartObj As ChartObject
     Set chartObj = val.ChartObjects.Add(Left:=150, Width:=420, Top:=170, Height:=300)
     With chartObj.Chart
-    ' Define la fuente de datos para la gráfica
+    ' Define la fuente de datos para la grï¿½fica
     Dim seriesNames As Variant
     seriesNames = Array("AHV", "AVV", "AAV", "BHV", "BVV", "BAV")
     
@@ -148,7 +147,7 @@ On Error GoTo 0
         .SeriesCollection(i).XValues = val.Range("A3:A12")
     Next i
     
-    .ChartType = xlLine ' Cambiar a gráfica de líneas
+    .ChartType = xlLine ' Cambiar a grï¿½fica de lï¿½neas
     .HasTitle = True
     .ChartTitle.Text = "Gr" & ChrW(225) & "fica de Valores de Velocidad"
     .Axes(xlCategory, xlPrimary).HasTitle = True
@@ -159,10 +158,10 @@ On Error GoTo 0
     .Axes(xlCategory).TickLabels.Orientation = 90
     End With
 
-    ' Crear una gráfica de barras a partir de los datos de aceleración
+    ' Crear una grï¿½fica de barras a partir de los datos de aceleraciï¿½n
     Set chartObj = val.ChartObjects.Add(Left:=100, Width:=420, Top:=370, Height:=300)
     With chartObj.Chart
-    ' Define la fuente de datos para la gráfica
+    ' Define la fuente de datos para la grï¿½fica
     seriesNames = Array("AHA", "AVA", "AAA", "BHA", "BVA", "BAA")
     
    For i = 1 To 6
@@ -172,7 +171,7 @@ On Error GoTo 0
         .SeriesCollection(i).XValues = val.Range("A22:A31")
     Next i
     
-    .ChartType = xlLine ' Cambiar a gráfica de líneas
+    .ChartType = xlLine ' Cambiar a grï¿½fica de lï¿½neas
     .HasTitle = True
     .ChartTitle.Text = "Gr" & ChrW(225) & "fica de Valores de Aceleraci" & ChrW(243) & "n"
     .Axes(xlCategory, xlPrimary).HasTitle = True
