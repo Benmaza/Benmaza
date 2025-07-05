@@ -1,65 +1,138 @@
-Sub ExportarTodoElLibroComoCSV()
-    Dim ws As Worksheet
-    Dim ruta As String
-    Dim nombreArchivo As String
-    Dim archivo As Integer
-    Dim encabezados As String
-    Dim datos As String
-    Dim fila As Long
-    Dim colOffset As Variant
-    Dim sufijos As Variant
-    Dim grupos As Variant
-    Dim s As Long
-    Dim grupoIndex As Long
-    Dim nombreLibro As String
-    Dim valorCelda As Variant
-    Dim valorFormateado As String
+Sub ExportarResumenComoCSV()
+    Dim ws As Worksheet, hojaResumen As Worksheet
+    Dim fila As Long, colOffset As Variant
+    Dim etiquetas As Variant
     Dim numero As Double
+    Dim encabezados2D() As Variant
+    Dim datos() As Variant
+    Dim i As Long, j As Long, dataIndex As Long
+    Dim numPuntos As String
+    Dim respuesta As VbMsgBoxResult
+    Dim numEtiquetas As Long
+    Dim idx As Long
+    Dim hojasDisponibles As Long
+    Dim numHojasStr As String, numHojas As Long
+    Dim hojasAProcesar As Collection, hojasInvertidas As Collection
+    Dim rutaCSV As String, nombreBase As String
 
-    ' Obtener nombre del libro sin extensión
-    nombreLibro = Left(ThisWorkbook.Name, InStrRev(ThisWorkbook.Name, ".") - 1)
-    ruta = ThisWorkbook.Path & "\"
-    nombreArchivo = ruta & nombreLibro & "_csv.csv"
-    archivo = FreeFile
-
-    Open nombreArchivo For Output As #archivo
-
-    ' Definiciones
-    grupos = Array("AH", "AV", "AA", "BH", "BV", "BA", "CH", "CV", "CA", "DH", "DV", "DA", "EH", "EV", "EA", "FH", "FV", "FA")
-    sufijos = Array("D", "V", "A")
     colOffset = Array(3, 5, 7) ' Columnas C, E, G
 
-    ' Encabezado
-    encabezados = "FECHA"
-    For grupoIndex = 0 To UBound(grupos)
-        For s = 0 To 2
-            encabezados = encabezados & "," & grupos(grupoIndex) & sufijos(s)
-        Next s
-    Next grupoIndex
-    Print #archivo, encabezados
+    etiquetas = Array( _
+        "AHD", "AHV", "AHA", "AVD", "AVV", "AVA", "AAD", "AAV", "AAA", _
+        "BHD", "BHV", "BHA", "BVD", "BVV", "BVA", "BAD", "BAV", "BAA", _
+        "CHD", "CHV", "CHA", "CVD", "CVV", "CVA", "CAD", "CAV", "CAA", _
+        "DHD", "DHV", "DHA", "DVD", "DVV", "DVA", "DAD", "DAV", "DAA", _
+        "EHD", "EHV", "EHA", "EVD", "EVV", "EVA", "EAD", "EAV", "EAA", _
+        "FHD", "FHV", "FHA", "FVD", "FVV", "FVA", "FAD", "FAV", "FAA")
 
-    ' Recorrer todas las hojas
-    For Each ws In ThisWorkbook.Worksheets
+    numPuntos = InputBox("¿Cuántos puntos desea procesar?" & vbCrLf & vbCrLf & _
+                         "2 puntos: AH, BH" & vbCrLf & _
+                         "4 puntos: AH, BH, CH, DH" & vbCrLf & _
+                         "6 puntos: AH, BH, CH, DH, EH, FH", _
+                         "Seleccionar cantidad de puntos", "2")
+
+    If numPuntos = "" Then Exit Sub
+    If Not IsNumeric(numPuntos) Or (numPuntos <> "2" And numPuntos <> "4" And numPuntos <> "6") Then
+        MsgBox "Por favor ingrese 2, 4 o 6 puntos.", vbExclamation
+        Exit Sub
+    End If
+
+    numEtiquetas = CLng(numPuntos) * 9
+
+    If hojaExiste("resumen") Then
+        respuesta = MsgBox("Ya existe una hoja llamada 'resumen'. ¿Desea reemplazarla?", vbYesNo + vbQuestion)
+        If respuesta = vbNo Then Exit Sub
+        Application.DisplayAlerts = False
+        ThisWorkbook.Worksheets("resumen").Delete
+        Application.DisplayAlerts = True
+    End If
+
+    hojasDisponibles = ThisWorkbook.Worksheets.Count
+    If hojaExiste("resumen") Then hojasDisponibles = hojasDisponibles - 1
+
+    numHojasStr = InputBox("¿Cuántas hojas desea procesar?" & vbCrLf & _
+                           "(Máximo: " & hojasDisponibles & ")", _
+                           "Seleccionar cantidad de hojas", hojasDisponibles)
+
+    If numHojasStr = "" Then Exit Sub
+    If Not IsNumeric(numHojasStr) Then
+        MsgBox "Por favor ingrese un número válido.", vbExclamation
+        Exit Sub
+    End If
+
+    numHojas = CLng(numHojasStr)
+    If numHojas < 1 Or numHojas > hojasDisponibles Then
+        MsgBox "Debe ingresar un número entre 1 y " & hojasDisponibles & ".", vbExclamation
+        Exit Sub
+    End If
+
+    Set hojaResumen = ThisWorkbook.Worksheets.Add
+    hojaResumen.Name = "resumen"
+
+    ReDim encabezados2D(1 To 1, 1 To numEtiquetas + 1)
+    encabezados2D(1, 1) = "FECHA"
+    For i = 0 To numEtiquetas - 1
+        encabezados2D(1, i + 2) = etiquetas(i)
+    Next i
+    hojaResumen.Range("A1").Resize(1, numEtiquetas + 1).Value = encabezados2D
+
+    Set hojasAProcesar = New Collection
+    For idx = ThisWorkbook.Worksheets.Count To 1 Step -1
+        Set ws = ThisWorkbook.Worksheets(idx)
         If ws.Name <> "resumen" Then
-            datos = """" & ws.Name & """"
-            For fila = 19 To 36
-                For s = 0 To 2
-                    On Error Resume Next
-                    numero = CDbl(ws.Cells(fila, colOffset(s)).Value)
-                    If Err.Number <> 0 Then
-                        numero = 0
-                        Err.Clear
-                    End If
-                    On Error GoTo 0
-                    valorFormateado = Format(numero, "0.00")
-                    datos = datos & ",""" & valorFormateado & """"
-                Next s
-            Next fila
-            Print #archivo, datos
+            hojasAProcesar.Add ws
+            If hojasAProcesar.Count = numHojas Then Exit For
         End If
+    Next idx
+
+    Set hojasInvertidas = New Collection
+    For idx = hojasAProcesar.Count To 1 Step -1
+        hojasInvertidas.Add hojasAProcesar(idx)
+    Next idx
+
+    ReDim datos(1 To hojasInvertidas.Count, 1 To numEtiquetas + 1)
+    i = 1
+
+    For Each ws In hojasInvertidas
+        datos(i, 1) = ws.Name
+        dataIndex = 2
+
+        For fila = 19 To 19 + (numEtiquetas \ 3) - 1
+            For j = 0 To 2
+                On Error Resume Next
+                numero = CDbl(ws.Cells(fila, colOffset(j)).Value)
+                If Err.Number <> 0 Then
+                    numero = 0
+                    Err.Clear
+                End If
+                On Error GoTo 0
+                datos(i, dataIndex) = Format(numero, "0.00")
+                dataIndex = dataIndex + 1
+            Next j
+        Next fila
+        i = i + 1
     Next ws
 
-    Close #archivo
+    hojaResumen.Range("A2").Resize(hojasInvertidas.Count, numEtiquetas + 1).Value = datos
+    hojaResumen.Columns.AutoFit
 
-    MsgBox "Exportación completada: " & nombreArchivo, vbInformation
+    ' Exportar como CSV
+    nombreBase = Left(ThisWorkbook.Name, InStrRev(ThisWorkbook.Name, ".") - 1)
+    rutaCSV = ThisWorkbook.Path & "\" & nombreBase & ".csv"
+
+    hojaResumen.Copy
+    With ActiveWorkbook
+        Application.DisplayAlerts = False
+        .SaveAs Filename:=rutaCSV, FileFormat:=xlCSV
+        .Close SaveChanges:=False
+        Application.DisplayAlerts = True
+    End With
+
+    MsgBox "Resumen exportado como CSV: " & vbCrLf & rutaCSV, vbInformation
 End Sub
+
+Function hojaExiste(nombreHoja As String) As Boolean
+    On Error Resume Next
+    hojaExiste = Not ThisWorkbook.Worksheets(nombreHoja) Is Nothing
+    On Error GoTo 0
+End Function
