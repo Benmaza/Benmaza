@@ -1,11 +1,12 @@
-# 📊 Capacitación en Ciencia de Datos — Bitácora de Aprendizaje
+## 📊 Capacitación en Ciencia de Datos — Bitácora de Aprendizaje
 
-Este repositorio forma parte de mi camino de formación como **científico de datos**, combinando estudios formales con recursos autodidactas. Aquí documento ejercicios, prácticas, apuntes y proyectos relacionados con:
+Este repositorio forma parte de mi camino de formación como científico de datos, combinando estudios formales con recursos autodidactas. Aquí documento ejercicios, prácticas, apuntes y proyectos relacionados con:
 
-- 🐍 **Python y lógica de programación**
-- 📈 **Estadística y visualización de datos**
-- 🤖 **Machine Learning y análisis predictivo**
-- 🧠 **Pensamiento computacional y resolución de problemas**
+- 🐍 Python y lógica de programación
+- 📈 Estadística y visualización de datos
+- 🧠 Pensamiento computacional y resolución de problemas
+- 🗃️ SQL para análisis y gestión de datos
+- 📊 Power BI para visualización interactiva
 
 ---
 
@@ -43,7 +44,7 @@ Mi meta es seguir creciendo profesionalmente en el área de ciencia de datos. Lo
 ## 📬 Contacto
 
 ¿Te interesa colaborar, compartir ideas o tienes sugerencias?  
-Puedes encontrarme en [LinkedIn](https://www.linkedin.com/in/benmaza/).
+Puedes encontrarme en [LinkedIn: Benmaza](https://www.linkedin.com/in/benmaza/).
 
 ---
 
@@ -58,4 +59,3 @@ Si encuentras errores, tienes ideas o quieres aportar, puedes abrir un issue o e
 
 Creo en el aprendizaje continuo, en compartir lo que uno sabe y en construir comunidad.  
 Este repositorio es una muestra de ese compromiso. Si estás en un camino similar, ¡bienvenido/a! Podemos crecer juntos.
-
